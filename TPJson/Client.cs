@@ -30,8 +30,6 @@ namespace TPJson
             this.PostalCode = postalCode;
             this.City = city;
             this.NumberPhone = numberPhone;
-        }
-
-        
+        }        
     }
 }
