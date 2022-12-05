@@ -14,8 +14,6 @@ namespace TPJson
 {
     public partial class Form1 : Form
     {
-
-
         public Form1()
         {
             InitializeComponent();
@@ -30,12 +28,12 @@ namespace TPJson
 
         private async void addJsonInListBox(string url, string delimiter, ListBox listBox)
         {
-            HttpClient client = new HttpClient();
+            HttpClient clientHttp = new HttpClient();
 
-            var builder = new UriBuilder(url);
-            var uri = builder.ToString();
+            UriBuilder builder = new UriBuilder(url);
+            string builderUri = builder.ToString();
 
-            var res = await client.GetAsync(uri);
+            var res = await clientHttp.GetAsync(builderUri);
 
             var content = await res.Content.ReadAsStringAsync();
             dynamic dataClientJson = new JavaScriptSerializer().Deserialize<dynamic>(content);
@@ -45,8 +43,10 @@ namespace TPJson
                 String concatValue = "";
                 foreach (KeyValuePair<string, object> kvp in dataClientJson[i])
                 {
+                    Client client = new Client();
                     if (kvp.Key == delimiter)
                     {
+                        Console.WriteLine(kvp.Key + " " + kvp.Value);
                         concatValue += kvp.Key + " " + kvp.Value;
                         listBox.Items.Add(concatValue);
                         concatValue = "";
@@ -64,12 +64,12 @@ namespace TPJson
             Client clientObj = new Client(clientLastName.Text, this.clientName.Text, clientAddress.Text, clientCodePostal.Text, clientCity.Text, clientPhoneNumber.Text);
             HttpClient client = new HttpClient();
 
-            string jsonEnvoi = new JavaScriptSerializer().Serialize(clientObj);
-            var data = new StringContent(jsonEnvoi, Encoding.UTF8, "application/json");
+            string json = new JavaScriptSerializer().Serialize(clientObj);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
             var builder = new UriBuilder("http://172.19.0.13/tpjson/create_client.php");
-            var uri = builder.ToString();
+            var builderUri = builder.ToString();
 
-            var res = await client.PostAsync(uri, data);
+            var res = await client.PostAsync(builderUri, data);
 
             var content = await res.Content.ReadAsStringAsync();
             dynamic dataJson = new JavaScriptSerializer().Deserialize<dynamic>(content);
@@ -80,12 +80,12 @@ namespace TPJson
             Produit produitObj = new Produit(produitRef.Text, produitLibelle.Text, Convert.ToSingle(produitPrix.Text));
             HttpClient client = new HttpClient();
 
-            string jsonEnvoi = new JavaScriptSerializer().Serialize(produitObj);
-            var data = new StringContent(jsonEnvoi, Encoding.UTF8, "application/json");
+            string json = new JavaScriptSerializer().Serialize(produitObj);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
             var builder = new UriBuilder("http://172.19.0.13/tpjson/create_produit.php");
-            var uri = builder.ToString();
+            var builderUri = builder.ToString();
 
-            var res = await client.PostAsync(uri, data);
+            var res = await client.PostAsync(builderUri, data);
 
             var content = await res.Content.ReadAsStringAsync();
             dynamic dataJson = new JavaScriptSerializer().Deserialize<dynamic>(content);
