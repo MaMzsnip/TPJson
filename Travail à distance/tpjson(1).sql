@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 05 déc. 2022 à 14:23
+-- Généré le : mar. 13 déc. 2022 à 09:47
 -- Version du serveur :  10.5.6-MariaDB-1:10.5.6+maria~stretch
 -- Version de PHP : 7.3.19-1~deb10u1
 
@@ -56,7 +56,8 @@ INSERT INTO `Client` (`numero`, `nom`, `prenom`, `adresse`, `codepostal`, `ville
 (23, 'Bartomeu', 'Saree', '1 Cody Drive', '3571', 'Lākshām', '8714725349'),
 (24, 'Barks', 'Jonell', '7 Mallory Junction', '6543', 'Naval', '1536363378'),
 (26, 'Roads', 'Haze', '3 Forest Road', '32-860', 'Czchów', '8081915327'),
-(62, 'Quilliard', 'Yvan', '18 rue de la libération', '55800', 'Revigny', '0767537127');
+(62, 'Quilliard', 'Yvan', '18 rue de la libération', '55800', 'Revigny', '0767537127'),
+(64, 'test', 'test', 'test', 'test', 'test', '0000000000');
 
 -- --------------------------------------------------------
 
@@ -79,7 +80,11 @@ INSERT INTO `Contenir` (`reference`, `numero`) VALUES
 ('AYMW', 3),
 ('BIVO', 4),
 ('EFIT', 5),
-('KBOF', 6);
+('KBOF', 6),
+('KBOF', 14),
+('LFRZ', 14),
+('SBMA', 14),
+('VGSD', 14);
 
 -- --------------------------------------------------------
 
@@ -103,7 +108,8 @@ INSERT INTO `Facture` (`numero`, `date`, `numero_Client`) VALUES
 (3, '2022-11-08', 3),
 (4, '2022-12-14', 4),
 (5, '2022-12-28', 8),
-(6, '2023-01-18', 10);
+(6, '2023-01-18', 10),
+(14, '2022-12-12', 4);
 
 -- --------------------------------------------------------
 
@@ -138,6 +144,7 @@ INSERT INTO `Produit` (`reference`, `libelle`, `prixUnitaire`) VALUES
 ('SBMA', 'Beef - Ground, Extra Lean, Fresh', 10),
 ('SVCP', 'Juice - V8, Tomato', 88),
 ('SVHG', 'Pumpkin - Seed', 87),
+('test', 'test', 0),
 ('VGSD', 'Tart - Raisin And Pecan', 32),
 ('WAKQ', 'Cheese - Havarti, Salsa', 38),
 ('WMPR', 'Mini - Vol Au Vents', 39),
@@ -183,13 +190,13 @@ ALTER TABLE `Produit`
 -- AUTO_INCREMENT pour la table `Client`
 --
 ALTER TABLE `Client`
-  MODIFY `numero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `numero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT pour la table `Facture`
 --
 ALTER TABLE `Facture`
-  MODIFY `numero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `numero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Contraintes pour les tables déchargées

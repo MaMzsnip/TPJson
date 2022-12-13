@@ -40,20 +40,18 @@ namespace TPJson
 
             for (int i = 0; i < dataClientJson.Length; i++)
             {
-                String concatValue = "";
+                string concatValue = "";
                 foreach (KeyValuePair<string, object> kvp in dataClientJson[i])
                 {
-                    Client client = new Client();
                     if (kvp.Key == delimiter)
                     {
-                        Console.WriteLine(kvp.Key + " " + kvp.Value);
-                        concatValue += kvp.Key + " " + kvp.Value;
+                        concatValue += kvp.Key + ":" + kvp.Value;
                         listBox.Items.Add(concatValue);
                         concatValue = "";
                     }
                     else
                     {
-                        concatValue += kvp.Key + " " + kvp.Value + " ";
+                        concatValue += kvp.Key + ":" + kvp.Value + ";";
                     }
                 }
             }
@@ -90,6 +88,39 @@ namespace TPJson
             var content = await res.Content.ReadAsStringAsync();
             dynamic dataJson = new JavaScriptSerializer().Deserialize<dynamic>(content);
         
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            string lineSelected = (string)listBox1.SelectedItem;
+
+            int numeroClient = Convert.ToInt32(lineSelected.Split(';')[0].Split(':')[1]);
+            string json = "{\"numeroClient\":" + numeroClient + ", \"produits\":[";
+
+            foreach (string item in listBox3.SelectedItems)
+            {
+                string reference = item.Split(';')[0].Split(':')[1];
+                //reference:SBMA;libelle:Beef - Ground, Extra Lean, Fresh;prixUnitaire:10
+                if ((listBox3.SelectedItems.IndexOf(item) + 1) == listBox3.SelectedItems.Count)
+                {
+                    json += "\"" + reference + "\"";
+                    break;
+                }
+                json += "\"" + reference + "\",";
+            }
+
+            json += "]}";
+
+            HttpClient client = new HttpClient();
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var builder = new UriBuilder("http://172.19.0.13/tpjson/create_facture.php");
+            var builderUri = builder.ToString();
+
+            var res = await client.PostAsync(builderUri, data);
+
+            var content = await res.Content.ReadAsStringAsync();
+            dynamic dataJson = new JavaScriptSerializer().Deserialize<dynamic>(content);
+
         }
     }
 }
